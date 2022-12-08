@@ -4,7 +4,7 @@
       <div class="input__group">
         <label for="email">Email</label>
         <input
-        class="inputer"
+          class="inputer"
           v-model.trim="email.val"
           :class="{ invalid: !email.isValid }"
           @blur="clearValidity('email')"
@@ -23,15 +23,31 @@
             class="number"
             v-model.trim="cardInfoLength.val"
           />
-          <input placeholder="MM / YY" type="text" class="expired" />
-          <input placeholder="CVC" type="text" class="cvc" />
+          <input
+            :class="{ invalid: !expired.isValid }"
+            @blur="clearValidity('expired')"
+            placeholder="MM / YY"
+            type="text"
+            class="expired"
+            v-model.trim="expired.val"
+          />
+          <input
+            :class="{ invalid: !cvc.isValid }"
+            @blur="clearValidity('cvc')"
+            placeholder="CVC"
+            type="text"
+            class="cvc"
+            v-model.trim="cvc.val"
+          />
         </div>
         <p v-if="!cardInfoLength.isValid">Number is invalid, 16 digits</p>
+        <p v-if="!cvc.isValid">Number is invalid, 3 digits</p>
+        <p v-if="!expired.isValid">Wrong date!</p>
       </div>
       <div class="input__group">
         <label for="name">Name on card</label>
         <input
-        class="inputer"
+          class="inputer"
           v-model.trim="name.val"
           :class="{ invalid: !name.isValid }"
           @blur="clearValidity('name')"
@@ -42,7 +58,7 @@
       <div class="input__group">
         <label for="email">Country or region</label>
         <select
-        class="inputer"
+          class="inputer"
           v-model.trim="country.val"
           :class="{ invalid: !country.isValid }"
           @blur="clearValidity('country')"
@@ -82,6 +98,14 @@ export default {
         val: '',
         isValid: true,
       },
+      cvc: {
+        val: '',
+        isValid: true,
+      },
+      expired: {
+        val: '',
+        isValid: true,
+      },
       cardInfoLength: {
         val: '',
         isValid: true,
@@ -102,9 +126,9 @@ export default {
     },
     showModal() {
       if (!this.formIsValid) {
-        alert('form is invalid');
+        alert('Success');
       } else {
-        alert('form is valid');
+        alert('Access denied');
       }
     },
     validateForm() {
@@ -113,21 +137,30 @@ export default {
         this.name.isValid = false;
         this.formIsValid = false;
       }
-      if (this.cardInfo.val === '') {
-        this.cardInfo.isValid = false;
-        this.formIsValid = false;
-      }
       if (this.cardInfoLength.val.length !== 16) {
         this.cardInfoLength.isValid = false;
         this.formIsValid = false;
+        console.log('Cardinfo')
+      }
+      if (this.cvc.val.length !== 3) {
+        this.cvc.isValid = false;
+        this.formIsValid = false;
+        console.log('cvc')
+      }
+      if (!this.expired.val.includes('/')) {
+        this.expired.isValid = false;
+        this.formIsValid = false;
+        console.log('here')
       }
       if (this.email.val === '' || !this.email.val.includes('@')) {
         this.email.isValid = false;
         this.formIsValid = false;
+        console.log('em')
       }
       if (this.country.val === '') {
         this.country.isValid = false;
         this.formIsValid = false;
+        console.log('hereCountry')
       }
       this.showModal();
     },
@@ -136,7 +169,7 @@ export default {
 </script>
 
 <style scoped>
-.inputer{
+.inputer {
   border-radius: 5px;
 }
 .temp {
@@ -190,7 +223,6 @@ label {
 .cvc {
   grid-area: 2 / 2 / 3 / 3;
   border-bottom-right-radius: 5px !important;
-
 }
 input {
   font-family: 'Poppins', sans-serif !important;
