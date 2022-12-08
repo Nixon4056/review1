@@ -4,6 +4,7 @@
       <div class="input__group">
         <label for="email">Email</label>
         <input
+        class="inputer"
           v-model.trim="email.val"
           :class="{ invalid: !email.isValid }"
           @blur="clearValidity('email')"
@@ -30,6 +31,7 @@
       <div class="input__group">
         <label for="name">Name on card</label>
         <input
+        class="inputer"
           v-model.trim="name.val"
           :class="{ invalid: !name.isValid }"
           @blur="clearValidity('name')"
@@ -40,6 +42,7 @@
       <div class="input__group">
         <label for="email">Country or region</label>
         <select
+        class="inputer"
           v-model.trim="country.val"
           :class="{ invalid: !country.isValid }"
           @blur="clearValidity('country')"
@@ -133,6 +136,9 @@ export default {
 </script>
 
 <style scoped>
+.inputer{
+  border-radius: 5px;
+}
 .temp {
   width: 100%;
   display: flex;
@@ -174,12 +180,17 @@ label {
 }
 .number {
   grid-area: 1 / 1 / 2 / 3;
+  border-top-left-radius: 5px !important;
+  border-top-right-radius: 5px !important;
 }
 .expired {
   grid-area: 2 / 1 / 3 / 2;
+  border-bottom-left-radius: 5px !important;
 }
 .cvc {
   grid-area: 2 / 2 / 3 / 3;
+  border-bottom-right-radius: 5px !important;
+
 }
 input {
   font-family: 'Poppins', sans-serif !important;
