@@ -15,17 +15,17 @@
         <label for="email">Card information</label>
         <div class="card__group">
           <input
-            :class="{ invalid: !cardInfo.isValid }"
+            :class="{ invalid: !cardInfoLength.isValid }"
             @blur="clearValidity('cardInfo')"
             placeholder="1234 1234 1234 1234"
             type="text"
             class="number"
-            v-model.trim="cardInfo.val"
+            v-model.trim="cardInfoLength.val"
           />
           <input placeholder="MM / YY" type="text" class="expired" />
           <input placeholder="CVC" type="text" class="cvc" />
         </div>
-        <p v-if="!cardInfo.isValid">Wrong Card info</p>
+        <p v-if="!cardInfoLength.isValid">Number is invalid, 16 digits</p>
       </div>
       <div class="input__group">
         <label for="name">Name on card</label>
@@ -71,7 +71,15 @@ export default {
         val: '',
         isValid: true,
       },
+      emailAt: {
+        val: '',
+        isValid: true,
+      },
       cardInfo: {
+        val: '',
+        isValid: true,
+      },
+      cardInfoLength: {
         val: '',
         isValid: true,
       },
@@ -102,8 +110,12 @@ export default {
         this.name.isValid = false;
         this.formIsValid = false;
       }
-      if (this.cardInfo.val === '' || this.cardInfo.val.length !== 16) {
+      if (this.cardInfo.val === '') {
         this.cardInfo.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.cardInfoLength.val.length !== 16) {
+        this.cardInfoLength.isValid = false;
         this.formIsValid = false;
       }
       if (this.email.val === '' || !this.email.val.includes('@')) {
