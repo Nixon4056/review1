@@ -102,11 +102,11 @@ export default {
         this.name.isValid = false;
         this.formIsValid = false;
       }
-      if (this.cardInfo.val === '') {
+      if (this.cardInfo.val === '' || this.cardInfo.val.length !== 16) {
         this.cardInfo.isValid = false;
         this.formIsValid = false;
       }
-      if (this.email.val === '' && !this.email.val.includes('@')) {
+      if (this.email.val === '' || !this.email.val.includes('@')) {
         this.email.isValid = false;
         this.formIsValid = false;
       }
