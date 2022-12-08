@@ -126,10 +126,10 @@ export default {
     },
     showModal() {
       if (!this.formIsValid) {
-        alert('Success');
-      } else {
         alert('Access denied');
-      }
+      } else {
+        alert('Success');
+        }
     },
     validateForm() {
       this.formIsValid = true;
